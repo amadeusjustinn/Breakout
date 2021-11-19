@@ -1,0 +1,13 @@
+module  block ( input Reset, frame_clk,
+                output [9:0] BlockX, BlockY, Block_SizeX, Bar_SizeY;
+
+
+    parameter [9:0] X_Centre = 320;
+    parameter [9:0] Y_Centre = 240;
+
+	assign Block_SizeX = 80;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	assign Block_SizeY = 15;
+    assign BlockX = X_Centre - Block_SizeX / 2;
+    assign BlockY = Bar_Y_Max;
+	 
+	 

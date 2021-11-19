@@ -68,10 +68,11 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
 	logic [1:0] signs;
 	logic [1:0] hundreds;
-	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig, barxsig, barysig, barsizeigy, barsizeigx;
+	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig, barxsig, barysig, barsizeigy, barsizeigx, blocksizey, blocksizex,blockx,blocky;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
-	logic ballout;
+	logic barreset;
+	logic [32:0] block_arr,curr_blocks;
 
 //=======================================================
 //  Structural coding
@@ -163,20 +164,25 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 	ball ball1(.*, .Reset(Reset_h), .frame_clk(VGA_VS),
 	    .BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
-				  .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig), .Ball_out(ballout));
+				  .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig), .Bar_Reset(barreset),
+				  .Block_SizeX(blocksizex), .Block_SizeY(blocksizey), .Block_Array(block_arr),.Blocks(curr_blocks));
 				  
 	bar bar0(.*, .Reset(Reset_h),.frame_clk(VGA_VS), 
-	.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy), .Ball_out(ballout));
+	.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy), .Bar_Reset(barreset));
 	
 	
 	color_mapper colour_mapper(.*, .DrawX(drawxsig), .DrawY(drawysig),
 										.BallX(ballxsig), .BallY(ballysig), .Ball_size(ballsizesig),
-										.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy));
+										.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
+										.Block_SizeX(blocksizex), .Block_SizeY(blocksizey),
+										.Block_Array(curr_blocks));
 	
 	vga_controller vga(.Clk(MAX10_CLK1_50), .Reset(Reset_h),
 							 .hs(VGA_HS), .vs(VGA_VS),
 							 .pixel_clk(VGA_Clk), .blank(blank),
 							 .sync(sync), .DrawX(drawxsig), .DrawY(drawysig));
+	
+	blocks level(.Reset(Reset_h), .frame_clk(VGA_VS), .Block_Array(block_arr), .Block_SizeX(blocksizex), .Block_SizeY(blocksizey));
 	
 	
 

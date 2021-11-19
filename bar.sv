@@ -15,7 +15,7 @@ module  bar ( input Reset, frame_clk, Bar_Reset,
     parameter [9:0] Bar_X_Step=2;      // Step size on the X axis
 
 
-	assign BarSizex = 20;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	assign BarSizex = 30;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	assign BarSizey = 3;
 	
 

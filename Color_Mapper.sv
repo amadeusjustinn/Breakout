@@ -14,10 +14,13 @@
 
 
 module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size, BarX, BarY, Bar_Sizex, Bar_Sizey,
+										input [9:0]  Block_SizeX, Block_SizeY,
+										input [32:0] Block_Array,
                        output logic [7:0]  Red, Green, Blue );
 
     logic ball_on;
 	 logic bar_on;
+	 logic block_on;
 
  /* Old Ball: Generated square box by checking if the current pixel is within a square of length
     2*Ball_Size, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
@@ -40,6 +43,9 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
 	 
 	 assign BarYSize = Bar_Sizey;
 	 assign BarXSize = Bar_Sizex;
+	 
+	logic[9:0] BlockX, BlockY;
+	logic color1,color2;
 
     always_comb
     begin:Ball_on_proc
@@ -55,6 +61,34 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
         else 
             bar_on = 1'b0;
     end
+	 
+	 
+	     always_comb 
+		  begin
+		  
+		  block_on =1'b0;
+		  color1 = 1'b0;
+		  color2 = 1'b0;
+
+		 for (int i =0; i<32; i++)
+		 begin
+			  BlockX = (10'b0000000000^((i%8)*80+40));
+			  BlockY = (10'b0000000000^(10+20*(i>>3)));
+			  
+		  if(Block_Array[i] && (((DrawX<=BlockX+Block_SizeX) && (DrawX>=BlockX-Block_SizeX))  && ((DrawY<=BlockY+Block_SizeY) && (DrawY>=BlockY-Block_SizeY))))
+            begin
+				block_on = 1'b1;
+				if(1'b0^(i%2))
+				color1=1'b1;
+				else if(1'b0^(i%3))
+				color2 =1'b1;
+				break;
+				end		  
+		  
+		  end
+		  end
+	 
+	 
 
     always_comb
     begin:RGB_Display
@@ -70,6 +104,29 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
 			   Red = 8'h80;
             Green = 8'h80;
             Blue = 8'h80;
+		end
+		
+		else if(block_on == 1'b1)
+		begin
+				if(color1)
+				begin
+				Red = 8'h80;
+            Green = 8'h1f;
+            Blue = 8'h80;
+				end
+				else if(color2)
+				begin
+				Red = 8'h80;
+            Green = 8'hff;
+            Blue = 8'h55;
+				end
+				else
+				begin
+				Red = 8'h10;
+				Blue = 8'h01;
+				Green = 8'ha2;
+				end
+				
 		end
 
 		else
