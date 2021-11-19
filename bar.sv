@@ -1,6 +1,6 @@
 // modified from provided Bar.sv
 
-module  bar ( input Reset, frame_clk, Ball_out,
+module  bar ( input Reset, frame_clk, Bar_Reset,
 					input [7:0] keycode,
                output [9:0]  BarX, BarY, Bar_Sizex, Bar_Sizey);
 
@@ -17,6 +17,7 @@ module  bar ( input Reset, frame_clk, Ball_out,
 
 	assign BarSizex = 20;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	assign BarSizey = 3;
+	
 
 		  
     always_ff @ (posedge Reset or posedge frame_clk )
@@ -26,12 +27,14 @@ module  bar ( input Reset, frame_clk, Ball_out,
 				Bar_X_Motion <= 10'd0; //Bar_X_Step;
 				Bar_X_Pos <= Bar_X_Begin;
         end
+		  else if(Bar_Reset)
+		  begin
+		  Bar_X_Pos <= Bar_X_Begin;
+		  end
 		  else if(keycode == 10'd0)
 		  begin
 		  Bar_X_Motion <= 10'd0;
 		  end
-		  else if(Ball_out)
-		  Bar_X_Pos = Bar_X_Begin;
 
         else
         begin

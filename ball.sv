@@ -17,7 +17,7 @@ module  ball ( input Reset, frame_clk,
 					input [7:0] keycode,
 					input [9:0] BarX, BarY, Bar_Sizex, Bar_Sizey,
                output [9:0]  BallX, BallY, BallS, 
-					output Ball_out );
+					output Bar_Reset );
     
     logic [9:0] Ball_X_Pos, Ball_X_Motion, Ball_Y_Pos, Ball_Y_Motion, Ball_Size;
 	 
@@ -29,6 +29,7 @@ module  ball ( input Reset, frame_clk,
     parameter [9:0] Ball_Y_Max=479;     // Bottommost point on the Y axis
     parameter [9:0] Ball_X_Step=1;      // Step size on the X axis
     parameter [9:0] Ball_Y_Step=2;      // Step size on the Y axis
+	 logic Ball_Reset;
 
     assign Ball_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	 
@@ -40,16 +41,18 @@ module  ball ( input Reset, frame_clk,
 				Ball_X_Motion <= 10'd0; //Ball_X_Step;
 				Ball_Y_Pos <= Ball_Y_Start;
 				Ball_X_Pos <= Ball_X_Start;
-				Ball_out= 1'b0;
+				Ball_Reset<= 1'b1;
+				Bar_Reset <= 1'b1;
         end  
         else 
         begin
-
-				if ( (Ball_Y_Pos + Ball_Size) >= Ball_Y_Max )  // Ball is at the bottom edge, BOUNCE!
+				Bar_Reset <= 1'b0;
+				if ( (Ball_Y_Pos + Ball_Size) >= Ball_Y_Max && ~Ball_Reset)  // Ball is at the bottom edge, BOUNCE!
 				begin
-					  Ball_out<=1'b1 ;  // 2's complement.
+					  Ball_Reset<=1'b1 ;  // 2's complement.
 					Ball_Y_Motion <= 10'd0; 
 				   Ball_X_Motion <= 10'd0; 
+					Bar_Reset <= 1'b1;
 					end
 					  
 				 else if ( (Ball_Y_Pos - Ball_Size) <= Ball_Y_Min )  // Ball is at the top edge, BOUNCE!
@@ -60,36 +63,36 @@ module  ball ( input Reset, frame_clk,
 					  
 				 else if ( (Ball_X_Pos - Ball_Size) <= Ball_X_Min )  // Ball is at the Left edge, BOUNCE!
 					  Ball_X_Motion <= Ball_X_Step;
-				 else if(Ball_X_Motion==0 && Ball_Y_Motion==0 && keycode==8'h2c  && ~Ball_out) //Game hasn't started
+				 else if(keycode==8'h2c  && Ball_Reset) //Game start
 				 begin
 				 Ball_X_Motion <=1;
 				 Ball_Y_Motion <=-Ball_Y_Step;
+				 Ball_Reset <= 1'b0;
 				 end
-				 
+				 else if(Ball_Reset)
+				begin
+					Ball_Y_Pos <= Ball_Y_Start;
+					Ball_X_Pos <= BarX;
+				 end
 				 
 				 // Collision with the bar
 				 else if( (((Ball_X_Pos)<=(BarX+Bar_Sizex)) && ((Ball_X_Pos)>=(BarX-Bar_Sizex))) &&
 				 ((Ball_Y_Pos+Ball_Size)>=(BarY-Bar_Sizey)) )
+				 begin
 					Ball_Y_Motion <= (~ (Ball_Y_Step) + 1'b1);
+					end
+
 				 else 
 					  Ball_Y_Motion <= Ball_Y_Motion;  // Ball is somewhere in the middle, don't bounce, just keep moving
 				
 				 
-				 if(~Ball_out)
+				 if(~Ball_Reset)
 				 begin
 				 Ball_Y_Pos <= (Ball_Y_Pos + Ball_Y_Motion);  // Update ball position
 				 Ball_X_Pos <= (Ball_X_Pos + Ball_X_Motion);
 				 end
-				 else
-				 begin
-					Ball_Y_Pos <= Ball_Y_Start;
-					Ball_X_Pos <= Ball_X_Start;
-					Ball_out <= 1'b0;
-					
-				end
 			
-			
-		end  
+	 end
     end
        
     assign BallX = Ball_X_Pos;
