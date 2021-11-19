@@ -1,0 +1,85 @@
+// modified from provided Bar.sv
+
+module  bar ( input Reset, frame_clk,
+					input [7:0] keycode,
+               output [9:0]  barX, barY);
+
+    logic [9:0] Bar_X_Pos, Bar_X_Motion, Bar_Y_Pos, Bar_Y_Motion, Bar_Size;
+
+    parameter [9:0] Bar_X_Begin=320;  // Center position on the X axis
+    parameter [9:0] Bar_Y_Begin=460;  // Center position on the Y axis
+    parameter [9:0] Bar_X_Min=10;       // Leftmost point on the X axis
+    parameter [9:0] Bar_X_Max=639;     // Rightmost point on the X axis
+    parameter [9:0] Bar_Y_Min=0;       // Topmost point on the Y axis
+    parameter [9:0] Bar_Y_Max=479;     // Bottommost point on the Y axis
+    parameter [9:0] Bar_X_Step=1;      // Step size on the X axis
+
+
+    always_ff @ (posedge Reset or posedge frame_clk )
+    begin: Move_Bar
+        if (Reset)  // Asynchronous Reset
+        begin
+				Bar_X_Motion <= 10'd0; //Bar_X_Step;
+				Bar_Y_Pos <= Bar_Y_Begin;
+				Bar_X_Pos <= Bar_X_Begin;
+        end
+
+        else
+        begin
+				 if ( (Bar_Y_Pos + Bar_Size) >= Bar_Y_Max )  // Bar is at the bottom edge, BOUNCE!
+					  Bar_Y_Motion <= (~ (Bar_Y_Step) + 1'b1);  // 2's complement.
+
+				 else if ( (Bar_Y_Pos - Bar_Size) <= Bar_Y_Min )  // Bar is at the top edge, BOUNCE!
+					  Bar_Y_Motion <= Bar_Y_Step;
+
+				 else if ( (Bar_X_Pos + Bar_Size) >= Bar_X_Max )  // Bar is at the Right edge, BOUNCE!
+					  Bar_X_Motion <= (~ (Bar_X_Step) + 1'b1);  // 2's complement.
+
+				 else if ( (Bar_X_Pos - Bar_Size) <= Bar_X_Min )  // Bar is at the Left edge, BOUNCE!
+					  Bar_X_Motion <= Bar_X_Step;
+
+				 else
+					  Bar_Y_Motion <= Bar_Y_Motion;  // Bar is somewhere in the middle, don't bounce, just keep moving
+
+
+				 case (keycode)
+					8'h04 : begin // A
+								if ((Bar_X_Pos - Bar_Size) > Bar_X_Min) begin
+									Bar_X_Motion <= -1;
+									Bar_Y_Motion <= -1;
+								end
+							  end
+
+					8'h07 : begin // D
+
+					        Bar_X_Motion <= 1;
+							  Bar_Y_Motion <= -1;
+							  end
+
+
+
+					8'h1A : begin // W
+								if ((Bar_Y_Pos - Bar_Size) > Bar_Y_Min) begin
+									Bar_Y_Motion <= -1;
+									Bar_X_Motion <= 0;
+								end
+							 end
+					default: ;
+			   endcase
+
+				 Bar_Y_Pos <= (Bar_Y_Pos + Bar_Y_Motion);  // Update Bar position
+				 Bar_X_Pos <= (Bar_X_Pos + Bar_X_Motion);
+
+
+
+
+		end
+    end
+
+    assign BarX = Bar_X_Pos;
+
+    assign BarY = Bar_Y_Begin
+
+
+
+endmodule

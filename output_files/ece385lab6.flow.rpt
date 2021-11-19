@@ -1,5 +1,5 @@
 Flow report for ece385lab6
-Thu Oct 21 10:57:00 2021
+Fri Nov 19 08:29:22 2021
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,17 +40,17 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Thu Oct 21 10:57:00 2021       ;
+; Flow Status                        ; Successful - Fri Nov 19 08:29:22 2021       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; ece385lab6                                  ;
 ; Top-level Entity Name              ; lab62                                       ;
 ; Family                             ; MAX 10                                      ;
 ; Device                             ; 10M50DAF484C7G                              ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 4,029 / 49,760 ( 8 % )                      ;
-;     Total combinational functions  ; 3,430 / 49,760 ( 7 % )                      ;
-;     Dedicated logic registers      ; 2,447 / 49,760 ( 5 % )                      ;
-; Total registers                    ; 2516                                        ;
+; Total logic elements               ; 4,173 / 49,760 ( 8 % )                      ;
+;     Total combinational functions  ; 3,534 / 49,760 ( 7 % )                      ;
+;     Dedicated logic registers      ; 2,458 / 49,760 ( 5 % )                      ;
+; Total registers                    ; 2527                                        ;
 ; Total pins                         ; 141 / 360 ( 39 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 11,392 / 1,677,312 ( < 1 % )                ;
@@ -66,7 +66,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 10/21/2021 10:55:19 ;
+; Start date & time ; 11/19/2021 08:28:12 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ece385lab6          ;
 +-------------------+---------------------+
@@ -77,7 +77,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------+------------------------------------------------------------+---------------+-------------------+----------------+
 ; Assignment Name                     ; Value                                                      ; Default Value ; Entity Name       ; Section Id     ;
 +-------------------------------------+------------------------------------------------------------+---------------+-------------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 8796757893088.163483171902945                              ; --            ; --                ; --             ;
+; COMPILER_SIGNATURE_ID               ; 268886085462182.163733209118860                            ; --            ; --                ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT              ; Systemverilog Hdl                                          ; --            ; --                ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (SystemVerilog)                            ; <None>        ; --                ; --             ;
 ; EDA_TIME_SCALE                      ; 1 ps                                                       ; --            ; --                ; eda_simulation ;
@@ -85,8 +85,6 @@ refer to the applicable agreement for further details.
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                                          ; --            ; --                ; --             ;
 ; MISC_FILE                           ; lab62soc/synthesis/../lab62soc.cmp                         ; --            ; --                ; --             ;
 ; MISC_FILE                           ; lab62soc/synthesis/../../lab62soc.qsys                     ; --            ; --                ; --             ;
-; MISC_FILE                           ; lab61soc/synthesis/../lab61soc.cmp                         ; --            ; --                ; --             ;
-; MISC_FILE                           ; lab61soc/synthesis/../../lab61soc.qsys                     ; --            ; --                ; --             ;
 ; OUTPUT_IO_TIMING_FAR_END_VMEAS      ; Half Signal Swing                                          ; --            ; --                ; --             ;
 ; OUTPUT_IO_TIMING_FAR_END_VMEAS      ; Half Signal Swing                                          ; --            ; --                ; --             ;
 ; OUTPUT_IO_TIMING_NEAR_END_VMEAS     ; Half Vccio                                                 ; --            ; --                ; --             ;
@@ -102,13 +100,8 @@ refer to the applicable agreement for further details.
 ; PROJECT_OUTPUT_DIRECTORY            ; output_files                                               ; --            ; --                ; --             ;
 ; SLD_FILE                            ; lab62soc/synthesis/lab62soc.regmap                         ; --            ; --                ; --             ;
 ; SLD_FILE                            ; lab62soc/synthesis/lab62soc.debuginfo                      ; --            ; --                ; --             ;
-; SLD_FILE                            ; lab61soc/synthesis/lab61soc.regmap                         ; --            ; --                ; --             ;
-; SLD_FILE                            ; lab61soc/synthesis/lab61soc.debuginfo                      ; --            ; --                ; --             ;
-; SLD_INFO                            ; QSYS_NAME lab61soc HAS_SOPCINFO 1 GENERATION_ID 1634261099 ; --            ; lab61soc          ; --             ;
-; SLD_INFO                            ; QSYS_NAME lab62soc HAS_SOPCINFO 1 GENERATION_ID 1634786171 ; --            ; lab62soc          ; --             ;
+; SLD_INFO                            ; QSYS_NAME lab62soc HAS_SOPCINFO 1 GENERATION_ID 1637328999 ; --            ; lab62soc          ; --             ;
 ; SOPCINFO_FILE                       ; lab62soc/synthesis/../../lab62soc.sopcinfo                 ; --            ; --                ; --             ;
-; SOPCINFO_FILE                       ; lab61soc/synthesis/../../lab61soc.sopcinfo                 ; --            ; --                ; --             ;
-; SYNTHESIS_ONLY_QIP                  ; On                                                         ; --            ; --                ; --             ;
 ; SYNTHESIS_ONLY_QIP                  ; On                                                         ; --            ; --                ; --             ;
 ; TOP_LEVEL_ENTITY                    ; lab62                                                      ; ece385lab6    ; --                ; --             ;
 +-------------------------------------+------------------------------------------------------------+---------------+-------------------+----------------+
@@ -119,26 +112,26 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:38     ; 1.0                     ; 1177 MB             ; 00:00:46                           ;
-; Fitter               ; 00:00:39     ; 1.1                     ; 1442 MB             ; 00:00:48                           ;
-; Assembler            ; 00:00:03     ; 1.0                     ; 834 MB              ; 00:00:04                           ;
-; Timing Analyzer      ; 00:00:07     ; 1.4                     ; 924 MB              ; 00:00:10                           ;
-; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 1148 MB             ; 00:00:03                           ;
-; Total                ; 00:01:30     ; --                      ; --                  ; 00:01:51                           ;
+; Analysis & Synthesis ; 00:00:26     ; 1.0                     ; 5013 MB             ; 00:00:42                           ;
+; Fitter               ; 00:00:27     ; 1.6                     ; 6701 MB             ; 00:01:05                           ;
+; Assembler            ; 00:00:03     ; 1.0                     ; 4701 MB             ; 00:00:03                           ;
+; Timing Analyzer      ; 00:00:04     ; 2.7                     ; 5026 MB             ; 00:00:09                           ;
+; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 4726 MB             ; 00:00:02                           ;
+; Total                ; 00:01:02     ; --                      ; --                  ; 00:02:01                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+-------------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                           ;
-+----------------------+-----------------------+--------------+------------+----------------+
-; Module Name          ; Machine Hostname      ; OS Name      ; OS Version ; Processor type ;
-+----------------------+-----------------------+--------------+------------+----------------+
-; Analysis & Synthesis ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
-; Fitter               ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
-; Assembler            ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
-; Timing Analyzer      ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
-; EDA Netlist Writer   ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
-+----------------------+-----------------------+--------------+------------+----------------+
++------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                    ;
++----------------------+------------------+------------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
++----------------------+------------------+------------+------------+----------------+
+; Analysis & Synthesis ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter               ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler            ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer      ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
+; EDA Netlist Writer   ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
++----------------------+------------------+------------+------------+----------------+
 
 
 ------------

@@ -68,9 +68,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
 	logic [1:0] signs;
 	logic [1:0] hundreds;
-	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig;
+	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig, barxsig, barysig, barsizeigy, barsizeigx;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
+	logic ballout;
 
 //=======================================================
 //  Structural coding
@@ -161,14 +162,22 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 	ball ball1(.*, .Reset(Reset_h), .frame_clk(VGA_VS),
-				  .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig));
+	    .BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
+				  .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig), .Ball_out(ballout));
+				  
+	bar bar0(.*, .Reset(Reset_h),.frame_clk(VGA_VS), 
+	.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy), .Ball_out(ballout));
+	
 	
 	color_mapper colour_mapper(.*, .DrawX(drawxsig), .DrawY(drawysig),
-										.BallX(ballxsig), .BallY(ballysig), .Ball_size(ballsizesig));
+										.BallX(ballxsig), .BallY(ballysig), .Ball_size(ballsizesig),
+										.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy));
 	
 	vga_controller vga(.Clk(MAX10_CLK1_50), .Reset(Reset_h),
 							 .hs(VGA_HS), .vs(VGA_VS),
 							 .pixel_clk(VGA_Clk), .blank(blank),
 							 .sync(sync), .DrawX(drawxsig), .DrawY(drawysig));
+	
+	
 
 endmodule

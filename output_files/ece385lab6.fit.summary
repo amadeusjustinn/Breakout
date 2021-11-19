@@ -1,14 +1,14 @@
-Fitter Status : Successful - Thu Oct 21 10:56:41 2021
+Fitter Status : Successful - Fri Nov 19 08:29:09 2021
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : ece385lab6
 Top-level Entity Name : lab62
 Family : MAX 10
 Device : 10M50DAF484C7G
 Timing Models : Final
-Total logic elements : 4,029 / 49,760 ( 8 % )
-    Total combinational functions : 3,430 / 49,760 ( 7 % )
-    Dedicated logic registers : 2,447 / 49,760 ( 5 % )
-Total registers : 2516
+Total logic elements : 4,173 / 49,760 ( 8 % )
+    Total combinational functions : 3,534 / 49,760 ( 7 % )
+    Dedicated logic registers : 2,458 / 49,760 ( 5 % )
+Total registers : 2527
 Total pins : 141 / 360 ( 39 % )
 Total virtual pins : 0
 Total memory bits : 11,392 / 1,677,312 ( < 1 % )
