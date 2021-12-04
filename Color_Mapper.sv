@@ -16,24 +16,23 @@
 module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size, BarX, BarY, Bar_Sizex, Bar_Sizey,
 										input [9:0]  Block_SizeX, Block_SizeY,
 										input [32:0] Block_Array,
+										input	[01:00] lives,
                        output logic [7:0]  Red, Green, Blue );
 
     logic ball_on;
 	 logic bar_on;
 	 logic block_on;
+	 logic [10:0] char_data;
+	 logic [7:0] char, currLine;
+	 logic life_block_on;
+	 logic score_on;
 
- /* Old Ball: Generated square box by checking if the current pixel is within a square of length
-    2*Ball_Size, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
+	 font_rom rom(.addr(char_data), .data(currLine));
+	
+	 
+	 
+	 
 
-    if ((DrawX >= BallX - Ball_size) &&
-       (DrawX <= BallX + Ball_size) &&
-       (DrawY >= BallY - Ball_size) &&
-       (DrawY <= BallY + Ball_size))
-
-     New Ball: Generates (pixelated) circle by using the standard circle formula.  Note that while
-     this single line is quite powerful descriptively, it causes the synthesis tool to use up three
-     of the 12 available multipliers on the chip!  Since the multiplicants are required to be signed,
-	  we have to first cast them from logic to int (signed by default) before they are multiplied). */
 
     int BallDistX, BallDistY, BallSize,BarYSize,BarXSize;
 	 assign BallDistX = DrawX - BallX;
@@ -46,14 +45,15 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
 	 
 	logic[9:0] BlockX, BlockY;
 	logic color1,color2;
-
-    always_comb
+		
+			
+	 always_comb
     begin:Ball_on_proc
         if ( ( BallDistX*BallDistX + BallDistY*BallDistY) <= (BallSize * BallSize) ) 
             ball_on = 1'b1;
         else 
-            ball_on = 1'b0;
-     end 
+            ball_on = 1'b0; 
+	  end
 
     always_comb begin : Bar_on_proc
         if (((DrawX<=BarX+BarXSize) && (DrawX>=BarX-BarXSize))  && ((DrawY<=BarY+BarYSize) && (DrawY>=BarY-BarYSize)))
@@ -63,8 +63,8 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
     end
 	 
 	 
-	     always_comb 
-		  begin
+	    always_comb 
+		  begin: blocks_code
 		  
 		  block_on =1'b0;
 		  color1 = 1'b0;
@@ -75,7 +75,7 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
 			  BlockX = (10'b0000000000^((i%8)*80+40));
 			  BlockY = (10'b0000000000^(10+20*(i>>3)));
 			  
-		  if(Block_Array[i] && (((DrawX<=BlockX+Block_SizeX) && (DrawX>=BlockX-Block_SizeX))  && ((DrawY<=BlockY+Block_SizeY) && (DrawY>=BlockY-Block_SizeY))))
+		  if(Block_Array[i] && (((DrawX<=BlockX+Block_SizeX) && (DrawX>=BlockX-Block_SizeX))  && ((DrawY<=BlockY+Block_SizeY) && (DrawY>=BlockY-Block_SizeY))) && (BlockX-Block_SizeX>=0) && (BlockX-Block_SizeX<=639))
             begin
 				block_on = 1'b1;
 				if(1'b0^(i%2))
@@ -90,23 +90,105 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
 	 
 	 
 
+	     always_comb 
+		  begin: Draw_Score
+		  
+		   char = 8'h00;  
+			score_on = 1'b0;
+			
+			if (DrawY>463 && DrawY<480 && DrawX>=0 && DrawX<=79)
+			begin
+			score_on = 1'b1;
+			if(DrawX<=7 && DrawX>=0)
+			char = 8'h53;
+			else if(DrawX>7 && DrawX<=15)
+			char = 8'h63;
+			else if(DrawX>15 && DrawX<=23)
+			char = 8'h6f;
+			else if(DrawX>23 && DrawX<=31)
+			char = 8'h72;
+			else if(DrawX>31 && DrawX<=39)
+			char = 8'h65;
+			else if(DrawX>39 && DrawX<=47)
+			char = 8'h3a;
+			else if(DrawX>47 && DrawX<=55)
+			char = 8'h30;
+			else if(DrawX>55 && DrawX<=63)
+			char = 8'h30;
+			else if(DrawX>63 && DrawX<=71)
+			char = 8'h30;
+			else if(DrawX>71 && DrawX<=79)
+			char = 8'h30;
+			
+			end
+			
+			end
+			
+	always_comb
+	begin: life_blocks_proc
+	life_block_on = 1'b0;
+	if (lives >= 3) begin
+		if ((DrawX >= 565) && (DrawX <= 579) && (DrawY >= 465) && (DrawY <= 479))
+			life_block_on = 1'b1;
+	end
+	if (lives >= 2) begin
+		if ((DrawX >= 595) && (DrawX <= 609) && (DrawY >= 465) && (DrawY <= 479))
+			life_block_on = 1'b1;
+	end
+	if (lives >= 1) begin
+		if ( (DrawX >= 624) && (DrawX <= 638) && (DrawY >= 465) && (DrawY <= 479))
+			life_block_on = 1'b1;
+	end
+
+	end			
+			
+			
+			
+		
+
     always_comb
     begin:RGB_Display
-        if ((ball_on == 1'b1))
-        begin
-            Red = 8'hff;
-            Green = 8'h55;
-            Blue = 8'h00;
-        end
+		char_data = char[6:0] * 16 + DrawY[3:0];
+		Red = 8'b0;
+		Green = 8'b0;
+		Blue = 8'b0;
+	   if(DrawX>=0 && DrawX<=639 && DrawY>=0 && DrawY<=479)
+		begin
+	  	Red = 8'b0;
+		Green = 8'b0;
+		Blue = 8'hff;
+		end
+		if (score_on==1'b1)
+		begin
+			if (currLine[7 - DrawX[2:0]])
+				begin
+					Red = 8'hff;
+					Green = 8'hff;
+					Blue = 8'hff;
+				end
+				else begin
+					Red = 8'h00;
+					Green = 8'h00;
+					Blue = 8'h00;
+				end
+	     end
+		
+		else if ((ball_on == 1'b1))
+			  begin
+					Red = 8'hff;
+					Green = 8'h55;
+					Blue = 8'h00;
+			  end
+		
 
-		else if(bar_on== 1'b1)
+		if(bar_on== 1'b1)
 		begin
 			   Red = 8'h80;
             Green = 8'h80;
             Blue = 8'h80;
 		end
 		
-		else if(block_on == 1'b1)
+		if(block_on == 1'b1)
 		begin
 				if(color1)
 				begin
@@ -128,13 +210,15 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
 				end
 				
 		end
+	
+	 if (life_block_on == 1'b1)
+		begin
+			Red = 8'he0;
+			Green = 8'he7;
+			Blue = 8'h22;
+		end
+		
 
-		else
-        begin
-            Red = 8'h00; 
-            Green = 8'h00;
-            Blue = 8'hff;
-        end
     end
 
 endmodule

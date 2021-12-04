@@ -3,7 +3,7 @@ module  blocks ( input Reset, frame_clk,
 					 output [32:0] Block_Array);
 					
 
-	assign Block_SizeX = 40;  
+	assign Block_SizeX = 39;  
 	assign Block_SizeY = 10;
 	always_ff @ (posedge Reset or posedge frame_clk )
 	begin

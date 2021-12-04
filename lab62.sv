@@ -73,6 +73,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [7:0] keycode;
 	logic barreset;
 	logic [32:0] block_arr,curr_blocks;
+	   logic [1:0] lives;
+
 
 //=======================================================
 //  Structural coding
@@ -165,7 +167,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	ball ball1(.*, .Reset(Reset_h), .frame_clk(VGA_VS),
 	    .BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
 				  .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig), .Bar_Reset(barreset),
-				  .Block_SizeX(blocksizex), .Block_SizeY(blocksizey), .Block_Array(block_arr),.Blocks(curr_blocks));
+				  .Block_SizeX(blocksizex), .Block_SizeY(blocksizey), .Block_Array(block_arr),.Blocks(curr_blocks), .lives(lives));
 				  
 	bar bar0(.*, .Reset(Reset_h),.frame_clk(VGA_VS), 
 	.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy), .Bar_Reset(barreset));
@@ -175,7 +177,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 										.BallX(ballxsig), .BallY(ballysig), .Ball_size(ballsizesig),
 										.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
 										.Block_SizeX(blocksizex), .Block_SizeY(blocksizey),
-										.Block_Array(curr_blocks));
+										.Block_Array(curr_blocks), .lives(lives));
 	
 	vga_controller vga(.Clk(MAX10_CLK1_50), .Reset(Reset_h),
 							 .hs(VGA_HS), .vs(VGA_VS),
