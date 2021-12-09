@@ -167,17 +167,21 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	ball ball1(.*, .Reset(Reset_h), .frame_clk(VGA_VS),
 	    .BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
 				  .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig), .Bar_Reset(barreset),
-				  .Block_SizeX(blocksizex), .Block_SizeY(blocksizey), .Block_Array(block_arr),.Blocks(curr_blocks), .lives(lives));
+				  .Block_SizeX(blocksizex), .Block_SizeY(blocksizey), .Block_Array(block_arr),.Blocks(curr_blocks),
+				  .lives(lives), .start_menu(start_menu));
 				  
 	bar bar0(.*, .Reset(Reset_h),.frame_clk(VGA_VS), 
-	.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy), .Bar_Reset(barreset));
+				.BarX(barxsig), .BarY(barysig),
+				.Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy), .Bar_Reset(barreset),
+				.start_menu(start_menu));
 	
 	
 	color_mapper colour_mapper(.*, .DrawX(drawxsig), .DrawY(drawysig),
 										.BallX(ballxsig), .BallY(ballysig), .Ball_size(ballsizesig),
 										.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
 										.Block_SizeX(blocksizex), .Block_SizeY(blocksizey),
-										.Block_Array(curr_blocks), .lives(lives));
+										.Block_Array(curr_blocks), .lives(lives), .keycode(keycode), .start_menu_1(start_menu),
+										.clk(MAX10_CLK1_50), .Reset(Reset_h));
 	
 	vga_controller vga(.Clk(MAX10_CLK1_50), .Reset(Reset_h),
 							 .hs(VGA_HS), .vs(VGA_VS),

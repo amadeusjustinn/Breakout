@@ -2,11 +2,11 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Nov 19, 2021 12:56:03 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1637348163787</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>C:\Users\Marek-Main\Documents\ECE_385_final_project\software\usb_kb_bsp</BspGeneratedLocation>
+        <BspGeneratedTimeStamp>Dec 8, 2021 10:47:34 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1639025254919</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>/home/ece385user/Documents/ECE_385_final_project-main/software/usb_kb_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
-        <SopcDesignFile>..\..\lab62soc.sopcinfo</SopcDesignFile>
+        <SopcDesignFile>../../lab62soc.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
         <Cpu>nios2_gen2_0</Cpu>
         <SchemaVersion>1.9</SchemaVersion>

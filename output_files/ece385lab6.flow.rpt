@@ -1,5 +1,5 @@
 Flow report for ece385lab6
-Fri Dec 03 22:14:02 2021
+Wed Dec  8 22:46:45 2021
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,17 +40,17 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Fri Dec 03 22:14:02 2021       ;
+; Flow Status                        ; Successful - Wed Dec  8 22:46:45 2021       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; ece385lab6                                  ;
 ; Top-level Entity Name              ; lab62                                       ;
 ; Family                             ; MAX 10                                      ;
 ; Device                             ; 10M50DAF484C7G                              ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 5,885 / 49,760 ( 12 % )                     ;
-;     Total combinational functions  ; 5,260 / 49,760 ( 11 % )                     ;
-;     Dedicated logic registers      ; 2,495 / 49,760 ( 5 % )                      ;
-; Total registers                    ; 2564                                        ;
+; Total logic elements               ; 5,988 / 49,760 ( 12 % )                     ;
+;     Total combinational functions  ; 5,363 / 49,760 ( 11 % )                     ;
+;     Dedicated logic registers      ; 2,497 / 49,760 ( 5 % )                      ;
+; Total registers                    ; 2566                                        ;
 ; Total pins                         ; 141 / 360 ( 39 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 11,392 / 1,677,312 ( < 1 % )                ;
@@ -66,7 +66,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 12/03/2021 22:12:43 ;
+; Start date & time ; 12/08/2021 22:44:43 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ece385lab6          ;
 +-------------------+---------------------+
@@ -77,7 +77,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------+------------------------------------------------------------+---------------+-------------------+----------------+
 ; Assignment Name                     ; Value                                                      ; Default Value ; Entity Name       ; Section Id     ;
 +-------------------------------------+------------------------------------------------------------+---------------+-------------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 268886085462182.163859116317200                            ; --            ; --                ; --             ;
+; COMPILER_SIGNATURE_ID               ; 8796757893088.163902508208941                              ; --            ; --                ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT              ; Systemverilog Hdl                                          ; --            ; --                ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (SystemVerilog)                            ; <None>        ; --                ; --             ;
 ; EDA_TIME_SCALE                      ; 1 ps                                                       ; --            ; --                ; eda_simulation ;
@@ -112,26 +112,26 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:38     ; 1.0                     ; 5058 MB             ; 00:00:53                           ;
-; Fitter               ; 00:00:25     ; 1.7                     ; 6718 MB             ; 00:01:02                           ;
-; Assembler            ; 00:00:02     ; 1.0                     ; 4707 MB             ; 00:00:03                           ;
-; Timing Analyzer      ; 00:00:05     ; 2.9                     ; 5052 MB             ; 00:00:10                           ;
-; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 4749 MB             ; 00:00:02                           ;
-; Total                ; 00:01:12     ; --                      ; --                  ; 00:02:10                           ;
+; Analysis & Synthesis ; 00:00:54     ; 1.0                     ; 1155 MB             ; 00:01:01                           ;
+; Fitter               ; 00:00:45     ; 1.2                     ; 1465 MB             ; 00:00:55                           ;
+; Assembler            ; 00:00:03     ; 1.0                     ; 832 MB              ; 00:00:03                           ;
+; Timing Analyzer      ; 00:00:09     ; 1.4                     ; 928 MB              ; 00:00:11                           ;
+; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 1171 MB             ; 00:00:03                           ;
+; Total                ; 00:01:54     ; --                      ; --                  ; 00:02:13                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                    ;
-+----------------------+------------------+------------+------------+----------------+
-; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
-+----------------------+------------------+------------+------------+----------------+
-; Analysis & Synthesis ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
-; Fitter               ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
-; Assembler            ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
-; Timing Analyzer      ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
-; EDA Netlist Writer   ; DESKTOP-34KLURM  ; Windows 10 ; 10.0       ; x86_64         ;
-+----------------------+------------------+------------+------------+----------------+
++-------------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                           ;
++----------------------+-----------------------+--------------+------------+----------------+
+; Module Name          ; Machine Hostname      ; OS Name      ; OS Version ; Processor type ;
++----------------------+-----------------------+--------------+------------+----------------+
+; Analysis & Synthesis ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
+; Fitter               ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
+; Assembler            ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
+; Timing Analyzer      ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
+; EDA Netlist Writer   ; ece385user-VirtualBox ; Ubuntu 19.04 ; 19         ; x86_64         ;
++----------------------+-----------------------+--------------+------------+----------------+
 
 
 ------------

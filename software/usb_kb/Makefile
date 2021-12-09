@@ -146,7 +146,8 @@ C_SRCS += main.c
 C_SRCS += usb_kb/HID.c
 C_SRCS += usb_kb/MAX3421E.c
 C_SRCS += usb_kb/transfer.c
-CXX_SRCS :=
+C_SRCS += .metadata/.plugins/org.eclipse.cdt.make.core/specs.c
+CXX_SRCS := .metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp
 ASM_SRCS :=
 
 

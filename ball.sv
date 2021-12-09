@@ -14,14 +14,15 @@
 
 
 module  ball ( input Reset, frame_clk,
-					input [7:0] keycode,
-					input [9:0] BarX, BarY, Bar_Sizex, Bar_Sizey,
-					input [9:0]  Block_SizeX, Block_SizeY,
-					input [32:0] Block_Array,
-               output [9:0]  BallX, BallY, BallS,
-				   output[31:0]Blocks,
-					output Bar_Reset,
-					output [1:0] lives);
+					input [07:00] keycode,
+					input [09:00] BarX, BarY, Bar_Sizex, Bar_Sizey,
+					input [09:00] Block_SizeX, Block_SizeY,
+					input [32:00] Block_Array,
+					input 		  start_menu,
+               output [09:00] BallX, BallY, BallS,
+				   output [31:00] Blocks,
+					output 			Bar_Reset,
+					output [01:00] lives);
 
     logic [9:0] Ball_X_Pos, Ball_X_Motion, Ball_Y_Pos, Ball_Y_Motion, Ball_Size;
 
@@ -75,7 +76,7 @@ module  ball ( input Reset, frame_clk,
 				end
 
 
-				else if(keycode==8'h2c  && Ball_Reset) //Game start
+				else if(keycode == 8'h2c && Ball_Reset && ~start_menu) //Game start
 				begin
 				 	Ball_X_Motion <=Ball_X_Step;
 				 	Ball_Y_Motion <=-Ball_Y_Step;

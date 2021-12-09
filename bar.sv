@@ -1,8 +1,9 @@
 // modified from provided Bar.sv
 
-module  bar ( input Reset, frame_clk, Bar_Reset,
-					input [7:0] keycode,
-               output [9:0]  BarX, BarY, Bar_Sizex, Bar_Sizey);
+module bar ( input Reset, frame_clk, Bar_Reset,
+				 input [7:0] keycode,
+				 input start_menu,
+             output [9:0]  BarX, BarY, Bar_Sizex, Bar_Sizey);
 
     logic [9:0] Bar_X_Pos, Bar_X_Motion, BarSizex,BarSizey;
 
@@ -20,9 +21,9 @@ module  bar ( input Reset, frame_clk, Bar_Reset,
 	
 
 		  
-    always_ff @ (posedge Reset or posedge frame_clk )
+    always_ff @ (posedge frame_clk)
     begin: Move_Bar
-        if (Reset)  // Asynchronous Reset
+        if (Reset || start_menu)  // Asynchronous Reset
         begin
 				Bar_X_Motion <= 10'd0; //Bar_X_Step;
 				Bar_X_Pos <= Bar_X_Begin;
