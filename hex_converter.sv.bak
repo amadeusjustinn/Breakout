@@ -1,0 +1,35 @@
+module hex_converter(input [15:0] in,
+							output logic [7:0] out_th, out_hu, out_te, out_on
+							);
+
+	logic [31:0] temp;
+
+	for (int i = 0; i < 4; i++)
+	begin
+		case(in[i << 2 : i << 2 + 3])
+			4'h0 : temp[i << 3 : i << 3 + 7] = 8'h30; // 0
+			4'h1 : temp[i << 3 : i << 3 + 7] = 8'h31; // 1
+			4'h2 : temp[i << 3 : i << 3 + 7] = 8'h32; // 2
+			4'h3 : temp[i << 3 : i << 3 + 7] = 8'h33; // 3
+			4'h4 : temp[i << 3 : i << 3 + 7] = 8'h34; // 4
+			4'h5 : temp[i << 3 : i << 3 + 7] = 8'h35; // 5
+			4'h6 : temp[i << 3 : i << 3 + 7] = 8'h36; // 6
+			4'h7 : temp[i << 3 : i << 3 + 7] = 8'h37; // 7
+			4'h8 : temp[i << 3 : i << 3 + 7] = 8'h38; // 8
+			4'h9 : temp[i << 3 : i << 3 + 7] = 8'h39; // 9
+			4'ha : temp[i << 3 : i << 3 + 7] = 8'h41; // A
+			4'hb : temp[i << 3 : i << 3 + 7] = 8'h42; // B
+			4'hc : temp[i << 3 : i << 3 + 7] = 8'h43; // C
+			4'hd : temp[i << 3 : i << 3 + 7] = 8'h44; // D
+			4'he : temp[i << 3 : i << 3 + 7] = 8'h45; // E
+			4'hf : temp[i << 3 : i << 3 + 7] = 8'h46; // F
+			default: ;
+		endcase
+	end
+
+		assign out_th = temp[31:24];
+		assign out_hu = temp[23:16];
+		assign out_te = temp[15:08];
+		assign out_on = temp[07:00];
+
+endmodule;

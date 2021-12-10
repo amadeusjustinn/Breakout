@@ -58,7 +58,7 @@ module lab62 (
 
 
 
-logic Reset_h, vssig, blank, sync, VGA_Clk;
+	logic Reset_h, Reset_actual, lives_zero, vssig, blank, sync, VGA_Clk;
 
 
 //=======================================================
@@ -73,7 +73,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [7:0] keycode;
 	logic barreset;
 	logic [32:0] block_arr,curr_blocks;
-	   logic [1:0] lives;
+	logic [1:0] lives;
+	logic [15:0] curr_score;
 
 
 //=======================================================
@@ -117,6 +118,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	
 	//Assign one button to reset
 	assign {Reset_h}=~ (KEY[0]);
+	assign Reset_actual = Reset_h || lives_zero;
 
 	//Our A/D converter is only 12 bit
 	assign VGA_R = Red[7:4];
@@ -164,13 +166,13 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 
 
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
-	ball ball1(.*, .Reset(Reset_h), .frame_clk(VGA_VS),
+	ball ball1(.*, .Reset(Reset_actual), .frame_clk(VGA_VS),
 	    .BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
 				  .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig), .Bar_Reset(barreset),
 				  .Block_SizeX(blocksizex), .Block_SizeY(blocksizey), .Block_Array(block_arr),.Blocks(curr_blocks),
-				  .lives(lives), .start_menu(start_menu));
+				  .lives(lives), .start_menu(start_menu), .curr_score(curr_score), .lives_zero(lives_zero));
 				  
-	bar bar0(.*, .Reset(Reset_h),.frame_clk(VGA_VS), 
+	bar bar0(.*, .Reset(Reset_actual),.frame_clk(VGA_VS), 
 				.BarX(barxsig), .BarY(barysig),
 				.Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy), .Bar_Reset(barreset),
 				.start_menu(start_menu));
@@ -181,15 +183,14 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 										.BarX(barxsig), .BarY(barysig), .Bar_Sizex(barsizeigx), .Bar_Sizey(barsizeigy),
 										.Block_SizeX(blocksizex), .Block_SizeY(blocksizey),
 										.Block_Array(curr_blocks), .lives(lives), .keycode(keycode), .start_menu_1(start_menu),
-										.clk(MAX10_CLK1_50), .Reset(Reset_h));
+										.clk(MAX10_CLK1_50), .Reset(Reset_actual), .curr_score(curr_score));
 	
-	vga_controller vga(.Clk(MAX10_CLK1_50), .Reset(Reset_h),
+	vga_controller vga(.Clk(MAX10_CLK1_50), .Reset(Reset_actual),
 							 .hs(VGA_HS), .vs(VGA_VS),
 							 .pixel_clk(VGA_Clk), .blank(blank),
 							 .sync(sync), .DrawX(drawxsig), .DrawY(drawysig));
 	
-	blocks level(.Reset(Reset_h), .frame_clk(VGA_VS), .Block_Array(block_arr), .Block_SizeX(blocksizex), .Block_SizeY(blocksizey));
-	
+	blocks level(.Reset(Reset_actual), .frame_clk(VGA_VS), .Block_Array(block_arr), .Block_SizeX(blocksizex), .Block_SizeY(blocksizey));
 	
 
 endmodule

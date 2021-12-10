@@ -22,45 +22,47 @@ module  ball ( input Reset, frame_clk,
                output [09:00] BallX, BallY, BallS,
 				   output [31:00] Blocks,
 					output 			Bar_Reset,
-					output [01:00] lives);
+					output [01:00] lives,
+					output			lives_zero,
+					output [15:00] curr_score);
 
-    logic [9:0] Ball_X_Pos, Ball_X_Motion, Ball_Y_Pos, Ball_Y_Motion, Ball_Size;
+	logic [9:0] Ball_X_Pos, Ball_X_Motion, Ball_Y_Pos, Ball_Y_Motion, Ball_Size;
 
-    parameter [9:0] Ball_X_Start=320;  // Center position on the X axis
-    parameter [9:0] Ball_Y_Start=452;  // Center position on the Y axis
-    parameter [9:0] Ball_X_Min=4;       // Leftmost point on the X axis
-    parameter [9:0] Ball_X_Max=635;     // Rightmost point on the X axis
-    parameter [9:0] Ball_Y_Min=4;       // Topmost point on the Y axis
-    parameter [9:0] Ball_Y_Max=475;     // Bottommost point on the Y axis
-    parameter [9:0] Ball_X_Step=2;      // Step size on the X axis
-	 parameter [9:0] Ball_X_Step2=2;
-    parameter [9:0] Ball_Y_Step=3;      // Step size on the Y axis
-	 logic Ball_Reset;
-	 logic[9:0] BlockX, BlockY;
-
-
-    assign Ball_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	parameter [9:0] Ball_X_Start=320;  // Center position on the X axis
+	parameter [9:0] Ball_Y_Start=452;  // Center position on the Y axis
+	parameter [9:0] Ball_X_Min=4;       // Leftmost point on the X axis
+	parameter [9:0] Ball_X_Max=635;     // Rightmost point on the X axis
+	parameter [9:0] Ball_Y_Min=4;       // Topmost point on the Y axis
+	parameter [9:0] Ball_Y_Max=475;     // Bottommost point on the Y axis
+	parameter [9:0] Ball_X_Step=2;      // Step size on the X axis
+	parameter [9:0] Ball_X_Step2=2;
+	parameter [9:0] Ball_Y_Step=3;      // Step size on the Y axis
+	logic Ball_Reset;
+	logic[9:0] BlockX, BlockY;
 
 
+	assign Ball_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"	
 	logic moved;
+	assign lives_zero = (lives == 0);
 
     always_ff @ (posedge Reset or posedge frame_clk )
     begin: Move_Ball
-        if (Reset)  // Asynchronous Reset
-        begin
-            Ball_Y_Motion <= 10'd0; //Ball_Y_Step;
-			Ball_X_Motion <= 10'd0; //Ball_X_Step;
-			Ball_Y_Pos <= Ball_Y_Start;
-			Ball_X_Pos <= Ball_X_Start;
-			Ball_Reset<= 1'b1;
-			Bar_Reset <= 1'b1;
-			Blocks<=Block_Array;
-			moved<=1'b0;
-			lives <= 3; /* start with 3 lives */
-        end
-        else
+			if (Reset)  // Asynchronous Reset
+			begin
+				Ball_Y_Motion <= 10'd0; //Ball_Y_Step;
+				Ball_X_Motion <= 10'd0; //Ball_X_Step;
+				Ball_Y_Pos <= Ball_Y_Start;
+				Ball_X_Pos <= Ball_X_Start;
+				Ball_Reset<= 1'b1;
+				Bar_Reset <= 1'b1;
+				Blocks<=Block_Array;
+				moved<=1'b0;
+				lives <= 3; /* start with 3 lives */
+				curr_score <= 0;
+			end
+			else
 
-        begin
+			begin
 				Bar_Reset <= 1'b0;
 				moved<=1'b0;
 				if ( (Ball_Y_Pos + Ball_Size) >= Ball_Y_Max && ~Ball_Reset)  // Ball is at the bottom edge
@@ -174,7 +176,7 @@ module  ball ( input Reset, frame_clk,
 			Ball_X_Pos <= (Ball_X_Pos + Ball_X_Motion);
 			moved<=1'b1;
 			Blocks[i]<=0;
-
+			curr_score <= curr_score + 1;
 			end
 
 			// Hit the Top of Brick
@@ -185,7 +187,7 @@ module  ball ( input Reset, frame_clk,
 			Ball_X_Pos <= (Ball_X_Pos + Ball_X_Motion);
 			moved<=1'b1;
 			Blocks[i] <=0;
-
+			curr_score <= curr_score + 1;
 			end
 
 			//Hit the left of Brick
@@ -198,7 +200,7 @@ module  ball ( input Reset, frame_clk,
 			Ball_X_Pos <= (Ball_X_Pos + Ball_X_Motion);
 			moved<=1'b1;
 			Blocks[i] <=0;
-
+			curr_score <= curr_score + 1;
 			end
 
 			else if(((Ball_Y_Pos<=(BlockY+Block_SizeY)) && (Ball_Y_Pos>=(BlockY-Block_SizeY))) && ((Ball_X_Pos<=(BlockX+Block_SizeX)) && (Ball_X_Pos>=((BlockX+Block_SizeX)-Ball_X_Step))))
@@ -209,7 +211,7 @@ module  ball ( input Reset, frame_clk,
 			Ball_X_Pos <= (Ball_X_Pos + Ball_X_Motion);
 			moved<=1'b1;
 			Blocks[i] <=0;
-
+			curr_score <= curr_score + 1;
 			end
 			end
 

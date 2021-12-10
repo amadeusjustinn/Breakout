@@ -3628,3 +3628,48 @@ Info: Building ../usb_kb_bsp/
 make --no-print-directory -C ../usb_kb_bsp/
 [BSP build complete]
 [usb_kb build complete]
+21:18:25 **** Incremental Build of configuration Nios II for project usb_kb ****
+make all 
+Info: Building ../usb_kb_bsp/
+make --no-print-directory -C ../usb_kb_bsp/
+[BSP build complete]
+[usb_kb build complete]
+21:18:26 **** Incremental Build of configuration Nios II for project usb_kb_bsp ****
+make all 
+[BSP build complete]
+21:18:40 **** Incremental Build of configuration Nios II for project usb_kb ****
+make all 
+Info: Building ../usb_kb_bsp/
+make --no-print-directory -C ../usb_kb_bsp/
+[BSP build complete]
+[usb_kb build complete]
+21:25:30 **** Incremental Build of configuration Nios II for project usb_kb ****
+make all 
+Info: Building ../usb_kb_bsp/
+make --no-print-directory -C ../usb_kb_bsp/
+[BSP build complete]
+[usb_kb build complete]
+21:25:31 **** Incremental Build of configuration Nios II for project usb_kb_bsp ****
+make all 
+[BSP build complete]
+21:25:46 **** Incremental Build of configuration Nios II for project usb_kb ****
+make all 
+Info: Building ../usb_kb_bsp/
+make --no-print-directory -C ../usb_kb_bsp/
+[BSP build complete]
+[usb_kb build complete]
+21:45:11 **** Incremental Build of configuration Nios II for project usb_kb ****
+make all 
+Info: Building ../usb_kb_bsp/
+make --no-print-directory -C ../usb_kb_bsp/
+[BSP build complete]
+[usb_kb build complete]
+21:45:12 **** Incremental Build of configuration Nios II for project usb_kb_bsp ****
+make all 
+[BSP build complete]
+21:45:30 **** Incremental Build of configuration Nios II for project usb_kb ****
+make all 
+Info: Building ../usb_kb_bsp/
+make --no-print-directory -C ../usb_kb_bsp/
+[BSP build complete]
+[usb_kb build complete]

@@ -19,34 +19,34 @@ module  color_mapper ( input        [09:00] BallX, BallY, DrawX, DrawY, Ball_siz
 							  input			[01:00] lives,
 							  input			[07:00] keycode,
 							  input					  clk, Reset,
+							  input			[15:00] curr_score,
                        output logic [07:00] Red, Green, Blue,
 							  output logic			  start_menu_1);
 
-    logic ball_on;
-	 logic bar_on;
-	 logic block_on;
-	 logic [10:0] char_data;
-	 logic [7:0] char, currLine;
-	 logic life_block_on;
-	 logic score_on;
-	 logic start_menu = 1'b1;
-	 logic start_menu_pixel;
+	logic ball_on;
+	logic bar_on;
+	logic block_on;
+	logic [10:0] char_data;
+	logic [7:0] char, currLine;
+	logic life_block_on;
+	logic score_on;
+	logic start_menu = 1'b1;
+	logic start_menu_pixel;
+	logic [7:0] thousands, hundreds, tens, ones;
 
-	 font_rom rom(.addr(char_data), .data(currLine));
+	font_rom rom(.addr(char_data), .data(currLine));
 	
-	 
-	 
-	 
+	hex_converter hc(.in(curr_score),
+						  .out_th(thousands), .out_hu(hundreds), .out_te(tens), .out_on(ones));
 
+   int BallDistX, BallDistY, BallSize,BarYSize,BarXSize;
+	assign BallDistX = DrawX - BallX;
+   assign BallDistY = DrawY - BallY;
 
-    int BallDistX, BallDistY, BallSize,BarYSize,BarXSize;
-	 assign BallDistX = DrawX - BallX;
-    assign BallDistY = DrawY - BallY;
-
-    assign BallSize = Ball_size;
+   assign BallSize = Ball_size;
 	 
-	 assign BarYSize = Bar_Sizey;
-	 assign BarXSize = Bar_Sizex;
+	assign BarYSize = Bar_Sizey;
+	assign BarXSize = Bar_Sizex;
 	 
 	logic[9:0] BlockX, BlockY;
 	logic color1,color2;
@@ -60,38 +60,39 @@ module  color_mapper ( input        [09:00] BallX, BallY, DrawX, DrawY, Ball_siz
             ball_on = 1'b0; 
 	  end
 
-    always_comb begin : Bar_on_proc
-        if (((DrawX<=BarX+BarXSize) && (DrawX>=BarX-BarXSize))  && ((DrawY<=BarY+BarYSize) && (DrawY>=BarY-BarYSize)))
-            bar_on = 1'b1;
-        else 
-            bar_on = 1'b0;
-    end
+	always_comb begin : Bar_on_proc
+		if (((DrawX<=BarX+BarXSize) && (DrawX>=BarX-BarXSize))  && ((DrawY<=BarY+BarYSize) && (DrawY>=BarY-BarYSize)))
+			bar_on = 1'b1;
+		else 
+         bar_on = 1'b0;
+   end
 	 
 	 
-	    always_comb 
-		  begin: blocks_code
+	always_comb 
+	begin: blocks_code
 		  
-		  block_on =1'b0;
-		  color1 = 1'b0;
-		  color2 = 1'b0;
+		block_on = 1'b0;
+		color1 = 1'b0;
+		color2 = 1'b0;
 
-		 for (int i =0; i<32; i++)
-		 begin
-			  BlockX = (10'b0000000000^((i%8)*80+40));
-			  BlockY = (10'b0000000000^(10+20*(i>>3)));
+		for (int i =0; i<32; i++)
+		begin
+			BlockX = (10'b0000000000^((i%8)*80+40));
+			BlockY = (10'b0000000000^(10+20*(i>>3)));
 			  
-		  if(Block_Array[i] && (((DrawX<=BlockX+Block_SizeX) && (DrawX>=BlockX-Block_SizeX)) && ((DrawY<=BlockY+Block_SizeY) && (DrawY>=BlockY-Block_SizeY))) && (BlockX-Block_SizeX>=0) && (BlockX-Block_SizeX<=639))
-            begin
+			if(Block_Array[i] && (((DrawX<=BlockX+Block_SizeX) && (DrawX>=BlockX-Block_SizeX)) && ((DrawY<=BlockY+Block_SizeY) && (DrawY>=BlockY-Block_SizeY))) && (BlockX-Block_SizeX>=0) && (BlockX-Block_SizeX<=639))
+         begin
 				block_on = 1'b1;
 				if(1'b0^(i%2))
-				color1=1'b1;
-				else if(1'b0^(i%3))
-				color2 =1'b1;
-				break;
-				end		  
+					color1=1'b1;
+				else if(1'b0^(i%3)) begin
+					color2 =1'b1;
+					break;
+				end
+			end		  
 		  
-		  end
-		  end
+		end
+	end
 	 
 	always_ff @(posedge clk)
 	begin: Whether_Start_Menu
@@ -128,13 +129,13 @@ module  color_mapper ( input        [09:00] BallX, BallY, DrawX, DrawY, Ball_siz
 				else if(DrawX>39 && DrawX<=47)
 					char = 8'h3a; // :
 				else if(DrawX>47 && DrawX<=55)
-					char = 8'h30; // 0
+					char = thousands;
 				else if(DrawX>55 && DrawX<=63)
-					char = 8'h30; // 0
+					char = hundreds;
 				else if(DrawX>63 && DrawX<=71)
-					char = 8'h30; // 0
+					char = tens;
 				else if(DrawX>71 && DrawX<=79)
-					char = 8'h30; // 0
+					char = ones;
 			
 			end
 		end
