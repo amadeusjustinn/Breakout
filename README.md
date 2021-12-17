@@ -7,7 +7,7 @@ This is a version of the Atari game [Breakout](https://en.wikipedia.org/wiki/Bre
 1. Connect a MAX10 FPGA to your machine as well as to a monitor via the VGA port.
 2. Connect a USB I/O module onto the FPGA, then connect a USB keyboard to it.
 ### Running the project
-1. Clone this repository by running `git clone https://github.com/amadeusjustinn/ECE_385_final_project.git`, or download the code as a .ZIP file (click Code > Download ZIP) and decompress it.
+1. Clone this repository by running `git clone https://github.com/amadeusjustinn/Breakout.git`, or download the code as a .ZIP file (click Code > Download ZIP) and decompress it.
 2. Open Altera Quartus, click Open Project, and open `ece385lab6.qpf` found in the project folder. The project has already been compiled since the last push (To recompile after modifying the code yourself, click the green play button on the toolbar, or click Processing > Start Compilation, or click `Ctrl`+`L`).
 3. Go to Tools > Programmer; you should see the MAX10 device listed there. Click the device and click Start. Once the progress bar fills up completely, the start screen should appear on your monitor.
 4. Go to Tools > NIOS II Software Build Tools for Eclipse. Select the `software` folder as the workspace. Two folders, `usb_kb` and `usb_kb_bsp`, should be visible in the Project Explorer on the right (If not, click File > Import and import those two folders from the `software` folder).
